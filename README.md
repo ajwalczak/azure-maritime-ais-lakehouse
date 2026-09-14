@@ -35,6 +35,7 @@ The data pipeline is fully automated using **Databricks Workflows**, forming a r
 3. **Parallel Execution**:
    - **`Update_Silver_Current_State`**: Applies SCD Type 1 logic (`MERGE INTO`) to maintain a deduplicated, real-time snapshot of vessel positions.
    - **`Calculate_Gold_Metrics`**: Aggregates daily KPIs (unique ships per port vicinity) for BI consumption.
+
 ## 🛠️ Tech Stack
 * **Cloud Provider:** Microsoft Azure
 * **Compute:** Azure Databricks, Azure Functions (Serverless)
