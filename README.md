@@ -21,12 +21,20 @@ A core focus of this project is enterprise-grade security, completely eliminatin
 ## 🚀 Project Roadmap & Status
 
 - [x] **Phase 1: Cloud-Native Infrastructure & Data Producers** (Azure Functions, Event Hubs, OIDC CI/CD)
-- [x] **Phase 2: Bronze Layer** (Structured Streaming, Kafka API, Unity Catalog Setup, ADLS Gen2)
-- [ ] **Phase 3: Silver Layer** (JSON unnesting, H3 Spatial Engineering, World Port Index batch join)
-- [ ] **Phase 4: Gold Layer** (Business Aggregations, ACID MERGE INTO operations, Traffic metrics)
-- [ ] **Phase 5: Orchestration & Governance** (Databricks Workflows, Repos, Column-Level Security)
-- [ ] **Phase 6: Serving & BI** (Power BI / Tableau integration via Databricks SQL)
+- [x] **Phase 2: Bronze Layer** (Structured Streaming, Kafka API, Micro-batching via `availableNow=True`)
+- [x] **Phase 3: Silver Layer** (JSON unnesting, H3 Spatial Engineering, SCD Type 1 via MERGE INTO)
+- [x] **Phase 4: Gold Layer** (Business Aggregations, Daily Port Traffic metrics)
+- [x] **Phase 5: Orchestration & Governance** (Databricks Workflows DAG, modular pipelines)
+- [ ] **Phase 6: Serving & BI** (Power BI integration via Databricks SQL Warehouse)
 
+## ⚙️ Pipeline Orchestration (Databricks Workflows)
+The data pipeline is fully automated using **Databricks Workflows**, forming a robust Directed Acyclic Graph (DAG) for cost-effective micro-batching:
+
+1. **`Ingest_EventHubs_to_Bronze`**: Streams raw JSON payloads from Event Hubs into ADLS Gen2 using `Trigger(availableNow=True)`.
+2. **`Process_Silver_Cleaned`**: Unnests JSON payloads and enriches geographical coordinates with **Uber H3** spatial indexes.
+3. **Parallel Execution**:
+   - **`Update_Silver_Current_State`**: Applies SCD Type 1 logic (`MERGE INTO`) to maintain a deduplicated, real-time snapshot of vessel positions.
+   - **`Calculate_Gold_Metrics`**: Aggregates daily KPIs (unique ships per port vicinity) for BI consumption.
 ## 🛠️ Tech Stack
 * **Cloud Provider:** Microsoft Azure
 * **Compute:** Azure Databricks, Azure Functions (Serverless)
