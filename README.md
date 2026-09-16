@@ -14,9 +14,11 @@ The pipeline employs a dual-ingestion strategy, decoupling high-throughput telem
 6. **Governance:** `Databricks Unity Catalog` enforcing strict data governance and table management.
 
 ![Azure Architecture](assets/architecture_azure.PNG)
+
 *Azure Resource Group highlighting the PaaS/Serverless ecosystem, including Managed Identities and Key Vault for Zero Trust architecture.*
 
 ![Event Hubs Traffic](assets/eventhubs_traffic.PNG)
+
 *Azure Event Hubs telemetry traffic showcasing successful serverless data ingestion capable of handling significant message spikes.*
 
 ---
@@ -43,6 +45,7 @@ The data pipeline is fully automated using **Databricks Workflows**, forming two
    - **`Calculate_Gold_Metrics`**: Aggregates daily KPIs (unique ships per port vicinity) for BI consumption.
 
 ![Databricks DAG](assets/databricks_dag.PNG)
+
 *Databricks Workflows DAG demonstrating task dependencies and successful parallel execution of Silver and Gold transformations.*
 
 ---
@@ -53,6 +56,7 @@ To maintain cost-efficiency while ensuring processing reliability, Databricks co
 * **Metrics Monitoring:** Ganglia/Spark UI metrics confirmed optimal resource utilization. The container memory usage remains stable (no disk spill) and CPU utilization hovers efficiently around 50%, ensuring the cluster is neither bottlenecked nor over-provisioned.
 
 ![FinOps Metrics](assets/finops_metrics.PNG)
+
 *Databricks cluster metrics confirming optimal CPU utilization and healthy container memory limits on a Single Node setup.*
 
 ---
@@ -61,6 +65,7 @@ To maintain cost-efficiency while ensuring processing reliability, Databricks co
 The final business value is delivered in the Gold Layer, where raw GPS coordinates of thousands of vessels have been successfully joined with spatial port data using Uber's H3 resolution matching.
 
 ![Gold Layer SQL](assets/gold_layer_sql.PNG)
+
 *Databricks SQL query results displaying aggregated daily traffic, effectively distinguishing vessels moored at specific port terminals (e.g., Bałtycki Terminal Zbożowy) from those located in the Open Sea.*
 
 ---
